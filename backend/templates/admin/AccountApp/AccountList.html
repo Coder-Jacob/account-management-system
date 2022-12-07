@@ -1,0 +1,244 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+        {% include 'admin/includes/css-part.html' %}
+        {% include 'admin/includes/js-part.html' %}
+    <link rel="stylesheet" href="{% static 'admin/css/AccountList.css' %}">
+    <script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+</head>
+<body>
+{# app 开始 #}
+<div id="app">
+    {# 新增、编辑抽屉（从上往下） #}
+    <el-drawer
+      size = '50%'
+      :title="titleActive"
+      :visible.sync="drawer"
+      :direction="direction"
+      :before-close="handleClose">
+      {# 表单 #}
+        <div style="padding: 0 20px" class="form">
+            <el-form  :model="formInline" class="demo-form-inline">
+          <el-form-item label="用户名"  required=true>
+            <el-input v-model="formInline.username" placeholder="用户名"></el-input>
+          </el-form-item>
+          <el-form-item label="密码"  required=true>
+            <el-input v-model="formInline.Pwd" placeholder="密码"></el-input>
+          </el-form-item>
+            <el-form-item label="链接"  required=true>
+            <el-input v-model="formInline.Links" placeholder="链接"></el-input>
+          </el-form-item>
+            <el-form-item label="平台"  required=true>
+            <el-input v-model="formInline.Platform" placeholder="平台"></el-input>
+          </el-form-item>
+            <el-form-item label="备注" required=true>
+            <el-input v-model="formInline.remarks" placeholder="备注"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading"   @click="onSubmit">提交</el-button>
+            <el-button type="danger" @click="cancelForm">取消</el-button>
+          </el-form-item>
+        </el-form>
+        </div>
+    </el-drawer>
+    <table class="tbList">
+        <div class="top">
+            <div class="left">
+{#                <h3 class="title">账号列表</h3>#}
+            </div>
+            <div class="right">
+                <el-button type="primary" @click="drawer=true,statu=0,titleActive='新增数据'"  icon="el-icon-plus">增加</el-button>
+            </div>
+        </div>
+        {# 表头 #}
+        <tr>
+            <th>用户名</th>
+            <th>密码</th>
+            <th style="width: 20%">链接</th>
+            <th style="width: 10%">平台</th>
+            <th style="width: 10%">备注</th>
+            <th style="width: 10%">更新时间</th>
+            <th style="width: 15%">操作</th>
+        </tr>
+        {# 表格 #}
+        {% if ListData %}
+            {% for item in ListData %}
+            <tr class="ListCon">
+                <td style="flex: 1"><el-tag id="user" @click="copy($event)">{{ item.userName }}</el-tag></td>
+                <td style="flex: 1" id="password" @click="copy($event)">{{ item.Pwd }}</td>
+                <td style="flex: 1" id="links" @click="copy($event)">{{ item.Links }}</td>
+                <td style="flex: 1">{{ item.Platform }}</td>
+                <td style="flex: 1">{{ item.remarks }}</td>
+                <td style="flex: 1">{{ item.subDate | date:"Y-m-d H:i"}}</td>
+                <td style="flex: 1">
+                    <el-popover trigger="click" placement="top">
+                        <p>用户名: {{ item.userName }}</p>
+                        <p>密码: {{ item.Pwd }}</p>
+                        <p style="word-wrap:break-word;width: 20vw">链接：{{item.Links}}</p>
+                        <div slot="reference" style="display: inline-block;margin-right: 5px"  class="name-wrapper">
+                            <el-button type="primary" icon="el-icon-view" circle></el-button>
+                        </div>
+                    </el-popover>
+                    <el-button type="success"  icon="el-icon-edit"  @click="itemId='{{ item.id }}',titleActive='更改数据',drawer=true,statu=1,formInline.username='{{ item.userName }}',formInline.Pwd='{{ item.Pwd }}',formInline.Links='{{ item.Links }}',formInline.Platform='{{ item.Platform }}',formInline.remarks='{{ item.remarks }}'" circle></el-button>
+                    <el-button type="danger" icon="el-icon-delete" v-loading.fullscreen.lock="fullscreenLoading"  @click="ondelete(),itemId='{{ item.id }}',statu=2,formInline.username='{{ item.userName }}',formInline.Pwd='{{ item.Pwd }}',formInline.Links='{{ item.Links }}',formInline.Platform='{{ item.Platform }}',formInline.remarks='{{ item.remarks }}'" circle></el-button>
+                </td>
+            </tr>
+        {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7"><el-empty description="暂无数据"></el-empty></td>
+                </tr>
+        {% endif %}
+    </table>
+</div>
+{# app 结束 #}
+</body>
+
+<script>
+    $.ajaxSetup({
+             data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })
+    new Vue({
+        el: '#app',
+        data: {
+            fullscreenLoading:false,
+            drawer: false,
+            direction: 'rtl',
+            titleActive:'',
+            //新增0/更新1
+            statu:1,
+            //当前菜单分类
+            menu:0,
+            itemId:0,
+            formInline: {
+                username: '',
+                Pwd: '',
+                Links:'',
+                Platform:'',
+                remarks:''
+            },
+            range: document.createRange(),
+            selector: document.getSelection()
+        },
+        methods: {
+            //复制用户名
+            copy(e){
+                let app = e.target
+                this.selector.removeAllRanges()
+                this.range.selectNodeContents(app)
+                this.selector.addRange(this.range)
+                document.execCommand('copy')
+                let msg = e.target.id==='user'?'用户名':e.target.id==='password'?'密码':e.target.id==='links'?'访问链接':''
+                this.open(msg+'复制成功',e.target.innerText,'success')
+            },
+            //获取URL参数
+            getQueryString(name) {
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                return unescape(r[2]);
+                }
+                return null;
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                        this.clearformData()
+                    })
+                    .catch(_ => {});
+            },
+            cancelForm() {
+              this.$confirm('确认关闭？')
+                    .then(_ => {
+                        this.drawer = false;
+                        clearTimeout(this.timer);
+                        this.clearformData()
+                    })
+                    .catch(_ => {});
+
+            },
+            onSubmit() {
+                let that = this
+                this.openFullScreen()
+                $.ajax({
+                    type:"post",
+                    url:'/account',
+                    data: {
+                        //新增0/更新1
+                        id:this.itemId,
+                        statu:this.statu,
+                        //当前菜单分类
+                        menu:this.getQueryString('id'),
+                        accountData:this.formInline
+                    },
+                    success:function (result){
+                        that.fullscreenLoading = false
+                        if (result.status==20000){
+                            that.open(result.status,result.msg,'success')
+                            clearTimeout(that.timer);
+                            that.drawer = false;
+                            that.clearformData()
+                        }else{
+                            that.open(result.status,result.msg,'warning')
+                        }
+
+                    }
+                })
+            },
+            ondelete(){
+                let that = this
+                this.$confirm('确认删除？')
+                    .then(_ => {
+                        that.openFullScreen()
+                        $.ajax({
+                            type:"post",
+                            url:'/account',
+                            data: {
+                                //新增0/更新1/删除2
+                                id:this.itemId,
+                                statu:this.statu,
+                                //当前菜单分类
+                                menu:this.getQueryString('id'),
+                                accountData:this.formInline
+                            },
+                            success:function (result){
+                                that.fullscreenLoading = false
+                                that.clearformData()
+                                if (result.status==20000){
+                                    that.open(result.status,result.msg,'success')
+                                }else{
+                                    that.open(result.status,result.msg,'warning')
+                                }
+                            }
+                        })
+                    })
+                    .catch(_ => {});
+            },
+            clearformData(){
+                this.formInline.username=''
+                this.formInline.Pwd=''
+                this.formInline.Links=''
+                this.formInline.Platform=''
+                this.formInline.remarks=''
+            },
+             openFullScreen() {
+                this.fullscreenLoading = true;
+             },
+            open(tit,msg,typ) {
+                this.$notify({
+                  title: tit,
+                  message: msg,
+                  type: typ
+                });
+            },
+    }
+    })
+</script>
+</html>

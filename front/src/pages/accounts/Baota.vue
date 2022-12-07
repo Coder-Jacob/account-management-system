@@ -368,7 +368,7 @@ export default {
   methods: {
     /**
      *@desc 异步请求获取数据接口
-     *@author Jajob
+     *@author Jacob
      *@Email jacob1109@126.com
      *@date 2022/11/29 02:02:53
      */
@@ -390,7 +390,7 @@ export default {
     },
     /**
      *@desc 复制账号信息
-     *@author Jajob
+     *@author Jacob
      *@Email jacob1109@126.com
      *@date 2022/11/29 02:03:08
      */
@@ -437,7 +437,7 @@ export default {
     },
     /**
      *@desc 显示新增表单抽屉
-     *@author Jajob
+     *@author Jacob
      *@Email jacob1109@126.com
      *@date 2022/11/29 02:03:27
      */
@@ -446,7 +446,7 @@ export default {
     },
     /**
      *@desc 关闭新增表单抽屉
-     *@author Jajob
+     *@author Jacob
      *@Email jacob1109@126.com
      *@date 2022/11/29 02:05:39
      */
@@ -455,7 +455,7 @@ export default {
     },
     /**
      *@desc提交表单
-     *@author Jajob
+     *@author Jacob
      *@Email jacob1109@126.com
      *@date 2022/11/29 02:06:58
      */

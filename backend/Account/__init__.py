@@ -24,7 +24,6 @@ else:
     """
         服务器环境 
     """
-    # _STATIC_URL = '/sdm/static/'
     import pymysql
 
     pymysql.version_info = (1, 4, 13, "final", 0)

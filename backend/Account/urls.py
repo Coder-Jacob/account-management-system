@@ -22,7 +22,7 @@ from . import settings
 from django.urls import path
 urlpatterns = [
     path('admin/accountApp/accountlist', accountApp.views.AccountList),
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('account/', include('accountApp.urls')),
     url('^static/(?P<path>.*)$', STATIC_SERVER,
         {'document_root': settings.STATIC_ROOT, 'show_indexes': True},

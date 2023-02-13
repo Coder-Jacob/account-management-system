@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import datetime
+import mimetypes
 import os
 from pathlib import Path
 
@@ -119,6 +120,10 @@ USE_I18N = True
 
 USE_TZ = False
 
+DATETIME_FORMAT = 'Y/m/d H:i:s'
+
+DATE_FORMAT = 'Y/m/d'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -133,7 +138,18 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-pymysql.install_as_MySQLdb()  # 使用pymysql代替mysqldb连接数据库
+mimetypes.add_type('text/css', '.css')
+mimetypes.add_type('text/css', '.min.css')
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/html', '.html')
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "accountApp.pagination.StandardPagination",
+    "PAGE_SIZE": 10
+}
+
+JWT_EXPIRED_DELTA = datetime.timedelta(hours=1)
+
 
 # SIMPLEUI 配置
 SIMPLEUI_STATIC_OFFLINE = True
@@ -145,7 +161,7 @@ SIMPLEUI_ANALYSIS = False
 SIMPLEUI_HOME_QUICK = True
 SIMPLEUI_HOME_ACTION = True
 # 默认主题
-SIMPLEUI_DEFAULT_THEME = 'Spider-pink.css'
+SIMPLEUI_DEFAULT_THEME = 'orange.css'
 SIMPLEUI_DEFAULT_ICON = False
 SIMPLEUI_HOME_TITLE = 'Spider`s、Account'
 

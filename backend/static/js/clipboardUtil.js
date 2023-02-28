@@ -19,3 +19,9 @@ function copyStr(str) {
     oInput.className = 'oInput';
     oInput.style.display = 'none';
 }
+
+function showModal(){
+    console.log('asasasas')
+    $('.ui.longer.modal')
+        .modal('show')
+}

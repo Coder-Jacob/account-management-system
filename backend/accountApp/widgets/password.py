@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 
 
 class SdmPasswordInput(TextInput):
-    template_name = "widgets/sdm_password_input.html"
+    template_name = "widgets/password_input.html"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

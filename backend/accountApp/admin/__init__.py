@@ -19,7 +19,7 @@ from ..models import Human
 
 @admin.register(Human, Type)
 class GroupAdmin(admin.ModelAdmin):
-    list_display = LIST_DISPLAY + ["__str__", '_count']
+    list_display =["__str__", '_count'] + LIST_DISPLAY
     search_fields = ['name']
     list_per_page = 14
 

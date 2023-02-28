@@ -3,3 +3,4 @@ from .dbService import DbServiceForm
 from .serverUser import ServerUserForm
 from .server import ServerForm
 from .account import AccountForm
+from .es import ElasticSearchForm

@@ -2,8 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-
-LIST_DISPLAY = ['id', 'updatedAt', 'createdAt', 'deletedAt']
+LIST_DISPLAY = ['updatedAt', 'createdAt', 'deletedAt']
 
 
 def showUrl(url):
@@ -31,8 +30,8 @@ class BaseAdmin(admin.ModelAdmin):
                     <a class="ui basic right pointing label" style="width:10em;">
                     %s
                     </a>
-                    <div class="ui vertical animated button blue" onclick="copyStr('%s')" >
-                        <div class="hidden content" style="color:white;" >复制</div>
+                    <div class="ui fade animated button blue" onclick="copyStr('%s')" tabindex="0" >
+                        <div class="hidden content" style="color:white;" >Copy</div>
                         <div class="visible content">
                                 <i class="copy icon"></i>
                         </div>
@@ -41,22 +40,31 @@ class BaseAdmin(admin.ModelAdmin):
         return tag
 
     @staticmethod
+    def operation(obj):
+        tag = mark_safe(
+            '''
+            <div class="ui buttons">
+                <div class="ui disabled button" _msttexthash="7832253" _msthash="378"><i class="eye icon " style="opacity: 1"></i></div>
+                <div class="or"></div>
+                <div class="ui disabled blue button" _msttexthash="1952132" _msthash="379"><i class="copy icon " style="opacity: 1"></i></div>
+            </div>
+            ''')
+        return tag
+
+    @staticmethod
     def password(obj):
         tag = mark_safe(
             '''<div class="ui left labeled button" tabindex="0">
-                    <div class="ui button">
-                        <i class="eye icon"></i>
-                    </div>
-                    <a class="ui basic left pointing label">
-                    ******
+                    <a class="fade animated ui basic right pointing label">
+                        ******
                     </a>
-                    <div class="ui vertical animated button blue" onclick="copyStr('%s')" >
-                        <div class="hidden content" style="color:white;" >复制</div>
+                    <div class="ui fade animated button blue" onclick="copyStr('%s')" >
+                        <div class="hidden content" style="color:white;" >Copy</div>
                         <div class="visible content">
                                 <i class="copy icon"></i>
                         </div>
                     </div>
-                </div>''' % (obj, ))
+                </div>''' % (obj,))
         return tag
 
     @staticmethod
@@ -79,12 +87,10 @@ class BaseAdmin(admin.ModelAdmin):
         js = [
             'js/jquery-3.6.0.min.js',
             'Semantic-UI-CSS-master/semantic.js',
-            'js/clipboardUtil.js',
             'bootstrap-3.4.1-dist/js/bootstrap.js',
-            'kindeditor4.1.11/kindeditor-all.js',
-            'kindeditor4.1.11/lang/zh-CN.js',
-            'js/base-admin-model-kind-editor-config.js',
+            'js/clipboardUtil.js',
         ]
+        # 'js/clipboardUtil.js',
 
 
 class PictureShowAdmin(BaseAdmin):

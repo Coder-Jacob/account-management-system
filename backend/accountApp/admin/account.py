@@ -2,45 +2,29 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from accountApp.forms import AccountForm
-from accountApp.models import Account, Tel, Email, Type
+from accountApp.models import Account, Tel, Email
 from Account.admin import BaseAdmin
 
 
 @admin.register(Account)
 class AccountAdmin(BaseAdmin):
-    list_display = ['id', 'platform', '_username', '_password', '_url', '_tels', '_emails', 'wechat', '_info',
-                    '_name'
-                    ]
-    list_display_links = ['id', 'platform']
+    list_display = ['_name', '_username', '_password', '_tels', '_emails', '_wechat', '_operation']
+    list_display_links = ['_name']
     date_hierarchy = 'updatedAt'
-    search_fields = ['name', 'username', 'url', 'info', 'types__name', 'wechat__id', 'wechat__nickName',
-                     'wechat__remark', 'platform__name', 'platform__url']
-    list_filter = ['group', 'platform', 'tels', 'emails', 'types', 'wechat']
+    search_fields = ['_name', 'username', 'url', 'info', 'types__name', 'wechat__id', 'wechat__nickName', 'wechat__remark', 'platform__name', 'platform__url']
+    list_filter = ['group', 'tels', 'emails', 'wechat']
     list_select_related = ['group', 'wechat']
-    autocomplete_fields = ['platform', 'tels', 'emails', 'types', 'wechat', 'group']
+    autocomplete_fields = ['tels', 'emails', 'wechat', 'group']
     list_per_page = 8
     actions = []
     form = AccountForm
 
-    def _url(self, obj):
-        if obj.platform is not None:
-            return BaseAdmin.shwoUrl(obj.platform.url)
-            # TODO:判断灵活的数据url，本应该是type的URL。
-        return BaseAdmin.shwoUrl(obj.url)
-
-    _url.allow_tags = True
-
-    def _info(self, obj):
-        if obj.info:
-            tag = mark_safe(
-                '''<i class="circular info icon link" data-id="%s" data-title="%s"
-                ></i>''' % (
-                    obj.id, obj.name))
-        else:
-            tag = "-"
+    def _operation(self, obj):
+        tag = BaseAdmin.showUrl(obj.name, obj.url) + BaseAdmin.copyInfo(obj.get_copy_content()) + BaseAdmin.showInfo(
+            obj.get_copy_content())
         return tag
 
-    _url.allow_tags = True
+    _operation.short_description = 'operation'
 
     def _password(self, obj):
         return BaseAdmin.password(obj.pwd)
@@ -53,17 +37,16 @@ class AccountAdmin(BaseAdmin):
     _username.allow_tags = True
 
     def _name(self, obj):
-        tag = mark_safe(
-            '''<a class="ui teal tag label" style="width:10em;white-space:nowrap;" onclick="goToDetail(this)">%s</a>''' % obj.name)
-        return tag
+        # tag = mark_safe('''<a class="ui teal label" style="white-space:nowrap;" onclick="goToDetail(this)"><i class="mail icon"></i>%s</a>''' % obj.name)
+        return obj.name
+    _name.short_description = 'WebsiteName'
 
-    _name.allow_tags = True
+    def _wechat(self, obj):
+        return obj.wechat
+    _wechat.short_description = "wechat"
 
     def _tels(self, obj):
-        items: str = ""
-        tels = obj.tels.all()
-        for tel in tels:
-            items += self._getTelItem(tel)
+        items = self._getTelItem('-') if obj.tels is None else self._getTelItem(obj.tels)
         finalList = '''
                 <div class="ui list">
                     %s              
@@ -71,23 +54,19 @@ class AccountAdmin(BaseAdmin):
         ''' % items
         return mark_safe(finalList)
 
-    def _getTelItem(self, tel: Tel):
+    def _getTelItem(self, tel):
         item = '''
-                        <div class="item">
-                            <i class="phone square icon"></i>
-                            <div class="content">
-                              <a class="header">%s</a>
-                              
-                            </div>
-                        </div>
-                ''' % tel.content
+                <div class="item">
+                    <i class="phone square icon"></i>
+                    <div class="content">
+                        <a class="header">%s</a>
+                    </div>
+                </div>
+                ''' % tel
         return mark_safe(item)
 
     def _emails(self, obj: Account):
-        items: str = ""
-        emails = obj.emails.all()
-        for email in emails:
-            items += self._getEmailItem(email)
+        items = self._getEmailItem('-') if obj.emails is None else self._getEmailItem(obj.emails)
         finalList = '''
                 <div class="ui list">
                     %s              
@@ -95,48 +74,16 @@ class AccountAdmin(BaseAdmin):
         ''' % items
         return mark_safe(finalList)
 
-    def _getEmailItem(self, email: Email):
+    def _getEmailItem(self, email):
         item = '''
-                        <div class="item">
-                            <i class="paper plane icon"></i>
-                            <div class="content">
-                              <a class="header">%s</a>
-
-                            </div>
-                        </div>
-                ''' % email.username
+                <div class="item">
+                    <i class="mail icon"></i>
+                    <div class="content">
+                        <a class="header">%s</a>
+                    </div>
+                </div>
+                ''' % email
         return mark_safe(item)
-
-    def _types(self, obj: Account):
-        items: str = ""
-        types = obj.types.all()
-        for item in types:
-            items += self._getTypeItem(item)
-        result = '''
-                        <div class="ui list">
-                            %s              
-                        </div>
-                ''' % items
-        return mark_safe(result)
-
-    def _getTypeItem(self, email: Type):
-        item = '''
-                        <div class="item">
-                            <i class="paper plane icon"></i>
-                            <div class="content">
-                              <a class="header">%s</a>
-
-                            </div>
-                        </div>
-                ''' % email.name
-        return mark_safe(item)
-
-    def actionTelAndEmailMigration(self, request, queryset):
-        for obj in queryset:
-            obj.types.add(obj.type)
-            obj.save()
-
-    actionTelAndEmailMigration.short_description = '数据迁移升级操作'
 
     class Media:
 

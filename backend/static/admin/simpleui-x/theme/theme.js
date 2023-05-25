@@ -13,6 +13,13 @@ var SimpleuiThemes = [
         file:"Spider-pink.css"
     },
     {
+        text: "Orange-Lavender",
+        menu:'#FF57D6',
+        logo:'#FF57D6',
+        top:'#FF57D6',
+        file:"OrangeLavender.css"
+    },
+    {
         text: "Simpleui-x",
         menu: '#2c2e39',
         logo: '#2c2e39',

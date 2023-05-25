@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-LIST_DISPLAY = ['updatedAt', 'createdAt', 'deletedAt']
+
+
+LIST_DISPLAY = ['updatedAt', 'createdAt']
 
 
 def showUrl(url):
@@ -24,10 +26,10 @@ class BaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'updatedAt'
 
     @staticmethod
-    def username(obj):
+    def username(obj, width='10em'):
         tag = mark_safe(
             '''<div class="ui left labeled button" tabindex="0">
-                    <a class="ui basic right pointing label" style="width:10em;">
+                    <a class="ui basic right pointing label" style="width:%s">
                     %s
                     </a>
                     <div class="ui fade animated button blue" onclick="copyStr('%s')" tabindex="0" >
@@ -36,7 +38,7 @@ class BaseAdmin(admin.ModelAdmin):
                                 <i class="copy icon"></i>
                         </div>
                     </div>
-                </div>''' % (obj, obj))
+                </div>''' % (width, obj, obj))
         return tag
 
     @staticmethod
@@ -44,9 +46,9 @@ class BaseAdmin(admin.ModelAdmin):
         tag = mark_safe(
             '''
             <div class="ui buttons">
-                <div class="ui disabled button" _msttexthash="7832253" _msthash="378"><i class="eye icon " style="opacity: 1"></i></div>
+                <div class="ui button" _msttexthash="7832253" _msthash="378"><i class="eye icon " style="opacity: 1"></i></div>
                 <div class="or"></div>
-                <div class="ui disabled blue button" _msttexthash="1952132" _msthash="379"><i class="copy icon " style="opacity: 1"></i></div>
+                <div class="ui blue button" _msttexthash="1952132" _msthash="379"><i class="copy icon " style="opacity: 1"></i></div>
             </div>
             ''')
         return tag
@@ -68,12 +70,32 @@ class BaseAdmin(admin.ModelAdmin):
         return tag
 
     @staticmethod
-    def shwoUrl(url: str):
+    def showUrl(name: str, url: str):
         tag = mark_safe('''
-                    <a class="ui circular icon red button" href="%s" target="blank">
-                        <i class="linkify icon"></i>
-                    </a>
-            ''' % url)
+                <a class="ui circular icon red button" href="%s" target="blank" title="前往%s官网">
+                        <i class="linkify icon" style="color:white"></i>
+                </a>
+            ''' % (url, name))
+        return tag
+
+    @staticmethod
+    def copyInfo(content):
+        tag = mark_safe('''
+                <div class="ui circular copy icon button green" onclick="copyText('%s')" title="复制所有信息" >
+                    <i class="copy icon"></i>
+                </div>
+            ''' % content)
+        return tag
+
+
+    @staticmethod
+    def showInfo(content):
+        tag = mark_safe(f"""
+            </style>
+            <div class="ui circular eye icon button disabled" onclick='showModal()' title="%s">
+                <i class="eye icon"></i>
+            </div>
+        """ % content)
         return tag
 
     class Media:
@@ -82,12 +104,13 @@ class BaseAdmin(admin.ModelAdmin):
             pass
 
         css = {
-            'all': ('Semantic-UI-CSS-master/semantic.css',)
+            'all': ('Semantic-UI-CSS-master/semantic.css', )
         }
         js = [
             'js/jquery-3.6.0.min.js',
             'Semantic-UI-CSS-master/semantic.js',
             'bootstrap-3.4.1-dist/js/bootstrap.js',
+            'js/clipboard.js',
             'js/clipboardUtil.js',
         ]
         # 'js/clipboardUtil.js',

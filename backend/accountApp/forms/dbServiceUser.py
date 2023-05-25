@@ -10,7 +10,7 @@ class DbServiceUserFormBase(ModelForm):
 
     class Meta:
         model = DbServiceUser
-        fields = ['owner', 'server', 'username', 'password', 'hasRootPriority']
+        fields = ['server', 'username', 'password', 'owner', 'hasRootPriority']
 
 
 class DbServiceUserForm(DbServiceUserFormBase):

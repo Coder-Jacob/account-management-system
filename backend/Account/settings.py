@@ -80,6 +80,7 @@ WSGI_APPLICATION = 'Account.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -153,7 +154,7 @@ JWT_EXPIRED_DELTA = datetime.timedelta(hours=1)
 
 # SIMPLEUI 配置
 SIMPLEUI_STATIC_OFFLINE = True
-SIMPLEUI_LOGO = '/static/img/LOGO.JPG'
+SIMPLEUI_LOGO = '/static/img/logo.png'
 # 隐藏右侧SimpleUI广告链接和使用分析
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
@@ -161,53 +162,117 @@ SIMPLEUI_ANALYSIS = False
 SIMPLEUI_HOME_QUICK = True
 SIMPLEUI_HOME_ACTION = True
 # 默认主题
-SIMPLEUI_DEFAULT_THEME = 'orange.css'
+SIMPLEUI_DEFAULT_THEME = 'OrangeLavender.css'
 SIMPLEUI_DEFAULT_ICON = False
-SIMPLEUI_HOME_TITLE = 'Spider`s、Account'
+SIMPLEUI_HOME_TITLE = 'VaultKey'
 
 # 自定义菜单
-# SIMPLEUI_CONFIG = {
-#     'system_keep': False,
+SIMPLEUI_CONFIG = {
+    'system_keep': False,
+
+    # 用于菜单排序和过滤, 不填此字段为默认排序和全部显示。 空列表[] 为全部不显示.
+    'menu_display': ['账号管理🔑', '高度隐私❗', '权限认证❗'],
+
+    # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时刷新展示菜单内容。
+    # 一般建议关闭。
+    'dynamic': False,
 #
-#     # 用于菜单排序和过滤, 不填此字段为默认排序和全部显示。 空列表[] 为全部不显示.
-#     'menu_display': ['菜单管理', '账号管理', '权限认证(闲人勿动!)'],
-#
-#     # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时刷新展示菜单内容。
-#     # 一般建议关闭。
-#     'dynamic': False,
-#
-#     'menus': [
-#         {
-#             'app': 'auth',
-#             'name': '权限认证(闲人勿动!)',
-#             'icon': 'fas fa-users-cog',
-#             'models': [
-#                 {
-#                     'name': '用户列表',
-#                     'icon': 'fa fa-user',
-#                     'url': 'auth/user/'
-#                 },
-#                 {
-#                     'name': '用户组',
-#                     'icon': 'fa fa-th-list',
-#                     'url': 'auth/group/'
-#                 }
-#             ]
-#         },
-#         {
-#             'app': 'accountApp',
-#             'name': '账号管理',
-#             'icon': 'fas fa-building',
-#             'models': [{
-#                 'name': item[1],
-#                 'icon': item[2],
-#                 'url': 'accountApp/accountlist?id=%s' % item[0]} for item in data]
-#         },
-#         {
-#             'app': 'accountApp',
-#             'name': '菜单管理',
-#             'icon': '',
-#             'url': 'accountApp/adminmenu'
-#         }
-#     ]
-# }
+    'menus': [
+        {
+            'app': 'auth',
+            'name': '权限认证❗',
+            'icon': 'fas fa-users-cog',
+            'models': [
+                {
+                    'name': '用户列表',
+                    'icon': 'fa fa-user',
+                    'url': 'auth/user/'
+                },
+                {
+                    'name': '用户组',
+                    'icon': 'fa fa-th-list',
+                    'url': 'auth/group/'
+                }
+            ]
+        },
+        {
+            'app': 'accountApp',
+            'name': '高度隐私❗',
+            'icon': 'fas fa-building',
+            'models': [
+                {
+                    'name': '个体/组织管理',
+                    'icon': '',
+                    'url': 'accountApp/human/'
+                },
+                {
+                    'name': '手机号管理',
+                    'icon': '',
+                    'url': 'accountApp/tel/'
+                },
+                {
+                    'name': '银行卡管理',
+                    'icon': '',
+                    'url': 'accountApp/bankcard/'
+                }
+            ]
+        },
+        {
+            'app': 'accountApp',
+            'name': '账号管理🔑',
+            'icon': 'fas fa-building',
+            'models': [
+                {
+                    'name': '所有微信',
+                    'icon': '',
+                    'url': 'accountApp/wechat/'
+                },
+                {
+                    'name': '所有通用账号',
+                    'icon': '',
+                    'url': 'accountApp/account/'
+                },
+                {
+                    'name': '所有电子邮箱',
+                    'icon': '',
+                    'url': 'accountApp/email/'
+                },
+                {
+                    'name': '所有服务器',
+                    'icon': '',
+                    'url': 'accountApp/server/'
+                },
+                {
+                    'name': '所有服务器账号',
+                    'icon': '',
+                    'url': 'accountApp/serveruser/'
+                },
+                {
+                    'name': '所有数据服务',
+                    'icon': '',
+                    'url': 'accountApp/dbservice/'
+                },
+                {
+                    'name': '所有数据库用户',
+                    'icon': '',
+                    'url': 'accountApp/dbserviceuser/'
+                },
+                {
+                    'name': '所有宝塔',
+                    'icon': '',
+                    'url': 'accountApp/bt/'
+                },
+                {
+                    'name': '所有WIFI管理',
+                    'icon': '',
+                    'url': 'accountApp/wifi/'
+                },
+                {
+                    'name': 'ElasticSearches',
+                    'icon': '',
+                    'url': 'accountApp/elasticsearch/'
+                }
+            ]
+        }
+    ]
+}

@@ -1,10 +1,9 @@
 from django.db import models
-
 from .account import BaseAccount
 
 
 class Email(BaseAccount):
-    # TODO:需要增加别名了
+    psi = models.CharField(max_length=200, null=True, blank=True, verbose_name='POP3/SMTP/IMAP授权码')
     remark = models.CharField(max_length=100, null=True, blank=True, verbose_name="备注")
 
     class Meta:
@@ -16,7 +15,7 @@ class Email(BaseAccount):
         B = self.remark
         if A is None:
             if B is None:
-                return "空邮件对象"
+                return "---"
             else:
                 return str(B)
         else:
@@ -24,3 +23,8 @@ class Email(BaseAccount):
                 return str(A)
             else:
                 return "%s(%s)" % (A, B)
+
+    def getEmails(self):
+        if self is None or self.username is None:
+            return '-'
+        return self.username

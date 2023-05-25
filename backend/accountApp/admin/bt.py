@@ -6,9 +6,7 @@ from ..models import BT
 
 @admin.register(BT)
 class BtAdmin(BaseAdmin):
-    list_display = ['id', 'port', 'server', '_username', '_password', '_url', '_basicAuthUsername',
-                    '_basicAuthPassword', 'updatedAt',
-                    'createdAt', 'deletedAt', ]
+    list_display = ['id', 'port', 'server', '_username', '_password', '_url', '_basicAuthUsername', '_basicAuthPassword', 'updatedAt', 'createdAt', 'deletedAt', ]
     autocomplete_fields = ['server']
     list_filter = ['server']
     list_display_links = ['port', 'server']
@@ -30,14 +28,15 @@ class BtAdmin(BaseAdmin):
         return BaseAdmin.password(obj.basicAuthPwd)
 
     def _url(self, obj):
-        uri = "http://"
+        uri = ""
         if obj.basicAuthUsername and obj.basicAuthPwd:
             uri += f"{obj.basicAuthUsername}:{obj.basicAuthPwd}@"
         if obj.domain:
             uri += obj.domain
         else:
-            uri += obj.server.ip
+            uri += "http://" + obj.server.ip
         uri += f":{obj.port}"
         if obj.path:
             uri += f"/{obj.path}"
-        return BaseAdmin.shwoUrl(uri)
+        print(uri)
+        return BaseAdmin.showUrl("宝塔", uri)

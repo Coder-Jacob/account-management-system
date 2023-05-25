@@ -15,16 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import include, url
+# from django.views.generic.base import RedirectView
+# from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.static import serve as STATIC_SERVER
 
 import accountApp.views
 from . import settings
-from django.urls import path
+from django.urls import path, re_path
+
+admin.site.site_header = 'VaultKey'
+admin.site.site_title = 'VaultKey账号管理系统'
+
 urlpatterns = [
     path('admin/accountApp/accountlist', accountApp.views.AccountList),
     path('', admin.site.urls),
     path('account/', include('accountApp.urls')),
-    url('^static/(?P<path>.*)$', STATIC_SERVER,
-        {'document_root': settings.STATIC_ROOT, 'show_indexes': True},
-        name='static'),
+    url('^static/(?P<path>.*)$', STATIC_SERVER, {'document_root': settings.STATIC_ROOT, 'show_indexes': True}, name='static'),
+    # path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')))
+
+
 ]

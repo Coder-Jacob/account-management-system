@@ -1,6 +1,6 @@
 from Account.models import BaseModel
 from .account import Account
-from .bankCard import BankCardModels
+from .bankCard import BankCard
 from .base import BaseServiceUserModel
 from .bt import BT
 from .dbService import DbService
@@ -12,5 +12,5 @@ from .region import Country, City
 from .server import Server
 from .serverUser import ServerUser
 from .tel import Tel
-from .type import Type
 from .wechat import Wechat
+from .wifi import Wifi

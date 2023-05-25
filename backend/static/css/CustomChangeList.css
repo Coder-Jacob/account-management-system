@@ -1,0 +1,13 @@
+/*.inline-related {*/
+/*    display: table-row;*/
+/*    vertical-align: middle;*/
+/*}*/
+
+.inline-related th, td {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.select2-selection__clear{
+    line-height: 27px;
+}

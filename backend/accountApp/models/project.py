@@ -26,4 +26,5 @@ class ProjectModels(BaseAccount):
 
     def get_copy_content(self):
         # content = f"WIFI管理信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}/jcb/管理地址：{self.LAA}/jcb/管理员账号：{self.username}/jcb/管理员密码：{self.pwd}" if self.isAdmin else f"WIFI信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}"
-        return self.username
+        content = f"项目信息（{self.name}）/jcb/前台地址：{self.ForegroundAddress}/jcb/后台地址：{self.LAA}/jcb/后台管理账号：{self.username}/jcb/后台管理密码：{self.pwd}/jcb/项目简介：{self.info}"
+        return content

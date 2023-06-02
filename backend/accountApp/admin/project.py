@@ -50,7 +50,7 @@ class ProjectAdmin(BaseAdmin):
     _pwd.short_description = "后台管理密码"
 
     def _operation(self, obj):
-        tag = BaseAdmin.copyInfo(obj.get_copy_content)
+        tag = BaseAdmin.copyInfo(obj.get_copy_content())
         # FIXME: 这里如果添加showInfo会导致两个button显示两行，影响UI，所以暂时就加了Copy。需要解决此问题并添加showInfo
         """tag = BaseAdmin.copyInfo(obj.get_copy_content) + BaseAdmin.showInfo(obj.get_copy_content)"""
         return tag

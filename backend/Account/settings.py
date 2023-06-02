@@ -238,6 +238,11 @@ SIMPLEUI_CONFIG = {
                     'url': 'accountApp/email/'
                 },
                 {
+                    'name': '所有项目管理',
+                    'icon': '',
+                    'url': 'accountApp/projectmodels/'
+                },
+                {
                     'name': '所有服务器',
                     'icon': '',
                     'url': 'accountApp/server/'

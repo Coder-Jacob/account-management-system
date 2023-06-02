@@ -13,6 +13,7 @@ from .serverUser import ServerUserAdmin
 from .tel import TelAdmin
 from .bankCard import BankCardAdmin
 from .wechat import WechatAdmin
+from .project import ProjectAdmin
 from ..forms import HumanForm
 # Register your admin models here.
 from ..models import Human

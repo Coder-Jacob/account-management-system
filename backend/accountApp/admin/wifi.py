@@ -9,6 +9,7 @@
 from django.contrib import admin
 
 from Account.admin import BaseAdmin
+from accountApp.forms import WifiForm
 from accountApp.models import Wifi
 
 
@@ -18,7 +19,7 @@ class WifiAdmin(BaseAdmin):
     list_display_links = ("name",)
     search_fields = ("name", "username",)
     list_filter = ("isAdmin", "LAA")
-    # TODO: 这里还需要自定义form（添加/修改表格页面）form.py
+    form = WifiForm
 
     def _wifiPwd(self, obj):
         return BaseAdmin.username(obj.wifiPwd)
@@ -26,23 +27,29 @@ class WifiAdmin(BaseAdmin):
     _wifiPwd.short_description = "WIFI密码"
 
     def _LAA(self, obj):
+        if obj.LAA is None:
+            return "-"
         return BaseAdmin.showUrl((obj.name + "wifi管理地址"), obj.LAA)
 
     _LAA.short_description = "管理地址"
 
     def _username(self, obj):
+        if obj.username is None:
+            return "-"
         return BaseAdmin.username(obj.username)
 
     _username.short_description = "管理员账号"
 
     def _pwd(self, obj):
+        if obj.pwd is None:
+            return "-"
         return BaseAdmin.password(obj.pwd)
 
     _pwd.short_description = "管理员密码"
 
     def _operation(self, obj):
         # FIXME: 这里copyInfo和showInfo先给了wifi名，后续需要在models.py文件添加get_copy_content()方法来获取完整的复制和查看信息（getInformation()）
-        tag = BaseAdmin.copyInfo(obj.name) + BaseAdmin.showInfo(obj.name)
+        tag = BaseAdmin.copyInfo(obj.get_copy_content()) + BaseAdmin.showInfo(obj.name)
         return tag
 
     _operation.short_description = "操作"

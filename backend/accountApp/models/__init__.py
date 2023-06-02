@@ -14,3 +14,5 @@ from .serverUser import ServerUser
 from .tel import Tel
 from .wechat import Wechat
 from .wifi import Wifi
+from .project import ProjectModels
+

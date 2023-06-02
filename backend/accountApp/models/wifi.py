@@ -15,7 +15,7 @@ class Wifi(BaseAccount):
     name = models.CharField(max_length=100, verbose_name="WIFI名", null=False, blank=False)
     wifiPwd = models.CharField(max_length=32, verbose_name="WIFI密码", null=True, blank=False)
     isAdmin = models.BooleanField(verbose_name="是否是管理员")
-    LAA = models.CharField(max_length=100, verbose_name="管理地址", null=True, help_text="如您不是wifi管理员则不用填写！")
+    LAA = models.CharField(max_length=100, verbose_name="管理地址", null=True, blank=True, help_text="如您不是wifi管理员则不用填写！")
 
     class Meta:
         verbose_name = "Wifi管理"
@@ -25,5 +25,5 @@ class Wifi(BaseAccount):
         return "WIFI：%s" % self.name
 
     def get_copy_content(self):
-        content = f"WIFI管理信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}/jcb/管理地址：{self.LAA}/jcb/管理员账号：{self.username}/jbc/管理员密码：{self.pwd}" if self.isAdmin else f"WIFI信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}"
+        content = f"WIFI管理信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}/jcb/管理地址：{self.LAA}/jcb/管理员账号：{self.username}/jcb/管理员密码：{self.pwd}" if self.isAdmin else f"WIFI信息({self.info})/jcb/WIFI名称：{self.name}/jcb/WIFI密码：{self.wifiPwd}"
         return content

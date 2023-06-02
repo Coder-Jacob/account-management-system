@@ -9,3 +9,5 @@ from .email import EmailForm
 from .tel import TelForm
 from .Wechat import WechatForm
 from .human import HumanForm
+from .wifi import WifiForm
+from .project import ProjectForm

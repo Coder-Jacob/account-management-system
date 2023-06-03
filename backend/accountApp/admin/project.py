@@ -55,7 +55,3 @@ class ProjectAdmin(BaseAdmin):
         """tag = BaseAdmin.copyInfo(obj.get_copy_content) + BaseAdmin.showInfo(obj.get_copy_content)"""
         return tag
     _operation.short_description = "操作"
-
-
-
-

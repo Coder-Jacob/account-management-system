@@ -11,7 +11,7 @@ class AccountAdmin(BaseAdmin):
     list_display = ['_name', '_username', '_password', '_tels', '_emails', '_wechat', '_operation']
     list_display_links = ['_name']
     date_hierarchy = 'updatedAt'
-    search_fields = ['_name', 'username', 'url', 'info', 'types__name', 'wechat__id', 'wechat__nickName', 'wechat__remark', 'platform__name', 'platform__url']
+    search_fields = ['name', 'username', 'url', 'info']
     list_filter = ['group', 'tels', 'emails', 'wechat']
     list_select_related = ['group', 'wechat']
     autocomplete_fields = ['tels', 'emails', 'wechat', 'group']

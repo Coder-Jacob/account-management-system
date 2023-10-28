@@ -169,24 +169,23 @@ SIMPLEUI_HOME_TITLE = 'VaultKey'
 # 自定义菜单
 SIMPLEUI_CONFIG = {
     'system_keep': False,
-
-    # 用于菜单排序和过滤, 不填此字段为默认排序和全部显示。 空列表[] 为全部不显示.
-    'menu_display': ['账号管理🔑', '高度隐私❗', '权限认证❗'],
-
     # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时刷新展示菜单内容。
     # 一般建议关闭。
     'dynamic': False,
-#
+    # 用于菜单排序和过滤, 不填此字段为默认排序和全部显示。 空列表[] 为全部不显示.
+    'menu_display': ['账号管理🔑', '高度隐私❗', '权限认证❗'],
     'menus': [
         {
             'app': 'auth',
             'name': '权限认证❗',
             'icon': 'fas fa-users-cog',
+            'codename': 'auth',
             'models': [
                 {
                     'name': '用户列表',
                     'icon': 'fa fa-user',
-                    'url': 'auth/user/'
+                    'url': 'auth/user/',
+                    'codename': 'auth.userList',
                 },
                 {
                     'name': '用户组',

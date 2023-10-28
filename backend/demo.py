@@ -1,7 +1,5 @@
-import hashlib
-
-"""
-183F63A4496DF395D67A6CD89A863E35
-"""
-
-print(hashlib.md5(b'123').hexdigest())
+rows = 5  # 更改这个数字以调整三角形的大小
+for i in range(rows, 0, -1):
+    for j in range(i):
+        print('*', end='')
+    print()

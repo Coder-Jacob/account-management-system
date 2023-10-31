@@ -9,7 +9,7 @@ from AMS_Django.admin import LIST_DISPLAY, BaseAdmin
 
 @admin.register(Email)
 class EmailAdmin(BaseAdmin):
-    list_display = ['id', '_username', '_pwd', "_PSI", 'group', 'remark'] + LIST_DISPLAY
+    list_display = ['id', '_username', '_pwd', 'group', 'remark'] + LIST_DISPLAY
     list_display_links = ['id']
     list_filter = ['group']
     list_select_related = ['group']
@@ -22,8 +22,8 @@ class EmailAdmin(BaseAdmin):
     def _pwd(self, obj):
         return BaseAdmin.password(obj.pwd)
 
-    def _PSI(self, obj):
+    """def _PSI(self, obj):
         if obj.psi is None:
             return obj.psi
         return BaseAdmin.password(obj.psi)
-    _PSI.short_description = 'POP3/SMTP/IMAP授权码'
+    _PSI.short_description = 'POP3/SMTP/IMAP授权码'"""

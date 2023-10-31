@@ -10,4 +10,4 @@ class EmailForm(ModelForm):
     class Meta:
         model = Email
 
-        fields = ['username', 'pwd', "psi", 'group', 'remark', 'info']
+        fields = ['username', 'pwd', 'group', 'remark', 'info']

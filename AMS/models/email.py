@@ -3,7 +3,6 @@ from .account import BaseAccount
 
 
 class Email(BaseAccount):
-    psi = models.CharField(max_length=200, null=True, blank=True, verbose_name='POP3/SMTP/IMAP授权码')
     remark = models.CharField(max_length=100, null=True, blank=True, verbose_name="备注")
 
     class Meta:

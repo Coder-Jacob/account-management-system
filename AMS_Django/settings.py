@@ -57,6 +57,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+"""解决使用内网穿透用https登录时响应CSRF验证失败. 请求被中断.（403）"""
+CSRF_TRUSTED_ORIGINS = ['https://83k0973l46.yicp.fun']
+
 ROOT_URLCONF = 'AMS_Django.urls'
 
 TEMPLATES = [

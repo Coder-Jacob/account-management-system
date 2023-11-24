@@ -3,3 +3,4 @@
 /.idea
 /AMS/migrations/*
 !/AMS/migrations/__init__.py
+/logs.log

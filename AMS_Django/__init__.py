@@ -1,6 +1,6 @@
 import platform
 
-_DEBUG = False
+_DEBUG = True
 # _STATIC_URL = '/static/'
 WINDOWS = 'Windows'
 LINUX = 'Linux'

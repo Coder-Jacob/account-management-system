@@ -14,8 +14,6 @@ import mimetypes
 import os
 from pathlib import Path
 
-import pymysql as pymysql
-
 from .secret import LOCAL as DB
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AMS',
-    'static',
 ]
 
 MIDDLEWARE = [

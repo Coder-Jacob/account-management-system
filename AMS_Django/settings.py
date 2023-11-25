@@ -153,7 +153,7 @@ JWT_EXPIRED_DELTA = datetime.timedelta(hours=1)
 
 # SIMPLEUI 配置
 SIMPLEUI_STATIC_OFFLINE = True
-SIMPLEUI_LOGO = '/img/logo.png'
+SIMPLEUI_LOGO = '/static/img/LOGO.png'
 # 隐藏右侧SimpleUI广告链接和使用分析
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False

@@ -16,8 +16,7 @@ from .wechat import WechatAdmin
 from .project import ProjectAdmin
 from ..forms import HumanForm
 # Register your admin models here.
-from ..models import Human
-
+from ..models import Human, ClassifyModel
 
 @admin.register(Human)
 class GroupAdmin(admin.ModelAdmin):
@@ -25,6 +24,10 @@ class GroupAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_per_page = 14
     form = HumanForm
-
     # def _count(self, obj):
     #     return AMS_Django.objects.filter(types=obj.id).count()
+@admin.register(ClassifyModel)
+class ClassifyAdmin(admin.ModelAdmin):
+    list_display = ["__str__"] + LIST_DISPLAY
+    search_fields = ['name']
+    list_per_page = 14

@@ -15,4 +15,4 @@ from .tel import Tel
 from .wechat import Wechat
 from .wifi import Wifi
 from .project import ProjectModels
-
+from .classify import ClassifyModel

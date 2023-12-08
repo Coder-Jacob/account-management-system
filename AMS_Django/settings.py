@@ -204,6 +204,11 @@ SIMPLEUI_CONFIG = {
                     'url': 'AMS/human/'
                 },
                 {
+                    'name': '通用账号分类管理',
+                    'icon': '',
+                    'url': 'AMS/classifymodel/'
+                },
+                {
                     'name': '手机号管理',
                     'icon': '',
                     'url': 'AMS/tel/'

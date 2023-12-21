@@ -56,6 +56,12 @@ MIDDLEWARE = [
 
 """解决使用内网穿透用https登录时响应CSRF验证失败. 请求被中断.（403）"""
 CSRF_TRUSTED_ORIGINS = ['https://83k0973l46.yicp.fun']
+
+# SECURE_SSL_REDIRECT = True  # 强制使用HTTPS
+SECURE_BROWSER_XSS_FILTER = True  # 启用浏览器的XSS过滤
+SECURE_CONTENT_TYPE_NOSNIFF = True  # 防止浏览器嗅探资源类型
+
+
 ROOT_URLCONF = 'AMS_Django.urls'
 
 TEMPLATES = [

@@ -14,20 +14,18 @@ import mimetypes
 import os
 from pathlib import Path
 
-from .secret import LOCAL as DB
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
+from . import _DEBUG
+DEBUG = _DEBUG
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-fqk$j=s1&0njz0qtdy@wa%a=1)y3u2v75@xx=q0xnsm+&gt%kp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-from . import _DEBUG
-
-DEBUG = _DEBUG
 
 ALLOWED_HOSTS = ['*']
 
@@ -86,14 +84,18 @@ WSGI_APPLICATION = 'AMS_Django.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
+from . import _DB
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB.MYSQL_DATABASE_NAME,
-        'USER': DB.MYSQL_USERNAME,
-        'PASSWORD': DB.MYSQL_PASSWORD,
-        'PORT': DB.MYSQL_PORT,
-        'HOST': DB.MYSQL_HOST
+        'ENGINE': _DB.Postgresql.DB_BACKEND,
+        'NAME': _DB.Postgresql.DB_DATABASE,
+        'HOST': _DB.Postgresql.DB_HOST,
+        'PORT': _DB.Postgresql.DB_PORT,
+        'USER': _DB.Postgresql.DB_USERNAME,
+        'PASSWORD': _DB.Postgresql.DB_PASSWORD,
+        'CONN_MAX_AGE': 0,
+        'OPTIONS': {
+        },
     }
 }
 

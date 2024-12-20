@@ -103,15 +103,15 @@ class BaseAdmin(admin.ModelAdmin):
         def __init__(self):
             pass
 
-        css = {
-            'all': ('Semantic-UI-CSS-master/semantic.css', )
-        }
+        # css = {
+        #     # 'all': ('Semantic-UI-CSS-master/semantic.css', )
+        # }
         js = [
             'js/jquery-3.6.0.min.js',
-            'Semantic-UI-CSS-master/semantic.js',
-            'bootstrap-3.4.1-dist/js/bootstrap.js',
-            'js/clipboard.js',
-            'js/clipboardUtil.js',
+            # 'Semantic-UI-CSS-master/semantic.js',
+            # 'bootstrap-3.4.1-dist/js/bootstrap.js',
+            # 'js/clipboard.js',
+            # 'js/clipboardUtil.js',
         ]
         # 'js/clipboardUtil.js',
 

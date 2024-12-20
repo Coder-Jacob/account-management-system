@@ -31,7 +31,7 @@ urlpatterns = [
     path('admin/AMS/accountlist', AMS.views.AccountList),
     path('', admin.site.urls),
     path('account/', include('AMS.urls')),
-    # url('^static/(?P<path>.*)$', STATIC_SERVER, {'document_root': settings.STATIC_ROOT, 'show_indexes': True}, name='static'),
+    url('^static/(?P<path>.*)$', STATIC_SERVER, {'document_root': settings.STATIC_ROOT, 'show_indexes': True}, name='static'),
     # path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')))
 
 
